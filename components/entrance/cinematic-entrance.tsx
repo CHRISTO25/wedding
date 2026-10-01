@@ -8,14 +8,16 @@ import { FallingPetals } from './falling-petals'
 type Stage = 'idle' | 'untying' | 'doors' | 'ambiance' | 'turn' | 'finale' | 'exit'
 
 const ORDER: Stage[] = ['idle', 'untying', 'doors', 'ambiance', 'turn', 'finale', 'exit']
+
+// Extended timing on the final stages for a slower, more graceful conclusion
 const TIMELINE: [Stage, number][] = [
   ['doors', 1500],
   ['ambiance', 2600],
-  ['turn', 5000],
-  ['finale', 7000],
-  ['exit', 8200],
+  ['turn', 5400],    // Gives the couple's rear view more breathing room
+  ['finale', 8400],  // 3s window to read the couple's names & date
+  ['exit', 11400],   // 3s hold on the "Welcome" covenant card & confetti
 ]
-const COMPLETE_AT = 9100
+const COMPLETE_AT = 13000 // Extended to allow the 1.6s fade-out to finish smoothly
 
 const FOIL_TEXT =
   'animate-inv-foil bg-[linear-gradient(110deg,#6b4a12_0%,#b8892c_30%,#f7e1a1_45%,#b8892c_60%,#6b4a12_100%)] bg-[length:200%_100%] bg-clip-text font-script text-[2.9rem] leading-[1.05] text-transparent motion-reduce:animate-none sm:text-[3.4rem]'
@@ -90,7 +92,7 @@ export function CinematicEntrance({
   const fireMarriageConfetti = () => {
     const colors = ['#D4AF37', '#FFF4D6', '#FFFFFF', '#F4A3AD', '#FBBF24']
     const heart = confetti.shapeFromText ? confetti.shapeFromText({ text: '❤', scalar: 2 }) : undefined
-    const base = { colors, ticks: 260, gravity: 0.7, scalar: 1.1, zIndex: 9999 }
+    const base = { colors, ticks: 320, gravity: 0.6, scalar: 1.1, zIndex: 9999 }
     confetti({ ...base, particleCount: 120, angle: 60, spread: 70, origin: { x: 0, y: 0.75 } })
     confetti({ ...base, particleCount: 120, angle: 120, spread: 70, origin: { x: 1, y: 0.75 } })
     if (heart) {
@@ -129,7 +131,7 @@ export function CinematicEntrance({
 
   return (
     <div
-      className={`fixed inset-0 z-50 overflow-hidden bg-[#0d0a06] transition-opacity duration-[900ms] ${
+      className={`fixed inset-0 z-50 overflow-hidden bg-[#0d0a06] transition-opacity duration-[1600ms] ease-out ${
         exiting ? 'pointer-events-none opacity-0' : 'opacity-100'
       }`}
       aria-live="polite"
@@ -140,14 +142,14 @@ export function CinematicEntrance({
           <img
             src="/images/couple-back.png"
             alt="Bride and groom standing at the floral altar, facing away"
-            className={`absolute inset-0 h-full w-full object-cover transition-[opacity,filter] duration-[1600ms] ease-in-out motion-reduce:animate-none ${
+            className={`absolute inset-0 h-full w-full object-cover transition-[opacity,filter] duration-[2200ms] ease-in-out motion-reduce:animate-none ${
               doorsOpen ? 'animate-inv-ken-burns' : ''
             } ${turned ? 'opacity-0 blur-[10px] brightness-140' : 'opacity-100 blur-0 brightness-100'}`}
           />
           <img
             src="/images/couple-front.png"
             alt="Bride and groom turning around, smiling and holding hands"
-            className={`absolute inset-0 h-full w-full object-cover transition-[opacity,filter,scale] duration-[1600ms] ease-in-out ${
+            className={`absolute inset-0 h-full w-full object-cover transition-[opacity,filter,scale] duration-[2200ms] ease-in-out ${
               turned ? 'scale-104 opacity-100 blur-0 brightness-100' : 'scale-114 opacity-0 blur-[10px] brightness-140'
             }`}
           />
@@ -158,19 +160,19 @@ export function CinematicEntrance({
         {inAmbiance && <FallingPetals />}
 
         <div
-          className={`absolute inset-x-0 bottom-[9%] px-6 text-center transition-opacity duration-700 ${
+          className={`absolute inset-x-0 bottom-[9%] px-6 text-center transition-opacity duration-1000 ${
             turned ? 'opacity-100' : 'opacity-0'
           }`}
         >
           {turned && (
             <>
-              <p className="animate-[inv-names-rise_1.2s_ease-out_both] font-serif text-xs uppercase tracking-[0.5em] text-[#f6e3b4] sm:text-sm">
+              <p className="animate-[inv-names-rise_1.5s_ease-out_both] font-serif text-xs uppercase tracking-[0.5em] text-[#f6e3b4] sm:text-sm">
                 The Wedding Of
               </p>
-              <h2 className="mt-2 animate-[inv-names-rise_1.6s_ease-out_0.3s_both] font-script text-6xl text-white drop-shadow-[0_4px_24px_rgba(212,175,55,0.8)] sm:text-8xl">
+              <h2 className="mt-2 animate-[inv-names-rise_1.8s_ease-out_0.3s_both] font-script text-6xl text-white drop-shadow-[0_4px_24px_rgba(212,175,55,0.8)] sm:text-8xl">
                 {'Austin & Merin'}
               </h2>
-              <p className="mt-3 animate-[inv-names-rise_1.4s_ease-out_0.7s_both] font-serif text-sm italic tracking-widest text-[#f6e3b4]">
+              <p className="mt-3 animate-[inv-names-rise_1.6s_ease-out_0.7s_both] font-serif text-sm italic tracking-widest text-[#f6e3b4]">
                 {'07 · 11 · 2026'}
               </p>
             </>
@@ -187,10 +189,10 @@ export function CinematicEntrance({
               />
             ))}
             <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center text-center">
-              <p className="animate-[inv-names-rise_0.9s_ease-out_both] font-serif text-xs uppercase tracking-[0.5em] text-[#8a6417]">
+              <p className="animate-[inv-names-rise_1.2s_ease-out_both] font-serif text-xs uppercase tracking-[0.5em] text-[#8a6417]">
                 Two Hearts · One Covenant
               </p>
-              <p className="mt-2 animate-[inv-names-rise_1s_ease-out_0.15s_both] font-script text-6xl text-[#5c3d0e] sm:text-7xl">
+              <p className="mt-2 animate-[inv-names-rise_1.4s_ease-out_0.2s_both] font-script text-6xl text-[#5c3d0e] sm:text-7xl">
                 Welcome
               </p>
             </div>
