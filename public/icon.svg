@@ -1,26 +1,231 @@
-<svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <style>
-    @media (prefers-color-scheme: light) {
-      .background { fill: black; }
-      .foreground { fill: white; }
-    }
-    @media (prefers-color-scheme: dark) {
-      .background { fill: white; }
-      .foreground { fill: black; }
-    }
-  </style>
-  <g clip-path="url(#clip0_7960_43945)">
-    <rect class="background" width="180" height="180" rx="37" />
-    <g style="transform: scale(95%); transform-origin: center">
-      <path class="foreground"
-        d="M101.141 53H136.632C151.023 53 162.689 64.6662 162.689 79.0573V112.904H148.112V79.0573C148.112 78.7105 148.098 78.3662 148.072 78.0251L112.581 112.898C112.701 112.902 112.821 112.904 112.941 112.904H148.112V126.672H112.941C98.5504 126.672 86.5638 114.891 86.5638 100.5V66.7434H101.141V100.5C101.141 101.15 101.191 101.792 101.289 102.422L137.56 66.7816C137.255 66.7563 136.945 66.7434 136.632 66.7434H101.141V53Z" />
-      <path class="foreground"
-        d="M65.2926 124.136L14 66.7372H34.6355L64.7495 100.436V66.7372H80.1365V118.47C80.1365 126.278 70.4953 129.958 65.2926 124.136Z" />
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <radialGradient id="bgGrad" cx="50%" cy="45%" r="65%">
+      <stop offset="0%" stop-color="#1c1c1f"/>
+      <stop offset="60%" stop-color="#0a0a0c"/>
+      <stop offset="100%" stop-color="#020202"/>
+    </radialGradient>
+
+    <!-- Metallic Gold Gradients -->
+    <linearGradient id="goldRim" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fff2be"/>
+      <stop offset="25%" stop-color="#d4af37"/>
+      <stop offset="50%" stop-color="#8a6e27"/>
+      <stop offset="75%" stop-color="#f5da7a"/>
+      <stop offset="100%" stop-color="#997424"/>
+    </linearGradient>
+
+    <linearGradient id="goldLight" x1="20%" y1="0%" x2="80%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="20%" stop-color="#fdf3cd"/>
+      <stop offset="50%" stop-color="#d4af37"/>
+      <stop offset="80%" stop-color="#997528"/>
+      <stop offset="100%" stop-color="#5a410d"/>
+    </linearGradient>
+
+    <linearGradient id="goldDark" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#91712a"/>
+      <stop offset="40%" stop-color="#5e4613"/>
+      <stop offset="70%" stop-color="#c5a045"/>
+      <stop offset="100%" stop-color="#3d2a06"/>
+    </linearGradient>
+
+    <!-- Platinum / White Gold Gradient -->
+    <linearGradient id="platGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="35%" stop-color="#e0e6ed"/>
+      <stop offset="70%" stop-color="#8a95a5"/>
+      <stop offset="100%" stop-color="#4d5663"/>
+    </linearGradient>
+
+    <!-- Rose Petal Shading Gradients -->
+    <radialGradient id="petalGrad1" cx="40%" cy="35%" r="60%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="65%" stop-color="#f0ece4"/>
+      <stop offset="90%" stop-color="#d2c9b8"/>
+      <stop offset="100%" stop-color="#a39682"/>
+    </radialGradient>
+
+    <radialGradient id="petalGrad2" cx="35%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="70%" stop-color="#e4ded5"/>
+      <stop offset="100%" stop-color="#9e917d"/>
+    </radialGradient>
+
+    <!-- Diamond Pattern / Defs -->
+    <g id="sparkle">
+      <circle cx="0" cy="0" r="1.8" fill="#ffffff"/>
+      <circle cx="0" cy="0" r="2.6" fill="none" stroke="#e8f4fc" stroke-width="0.5" opacity="0.8"/>
+    </g>
+
+    <!-- Drop Shadows -->
+    <filter id="shadow3d" x="-20%" y="-20%" width="150%" height="150%">
+      <feDropShadow dx="3" dy="6" stdDeviation="6" flood-color="#000000" flood-opacity="0.85"/>
+    </filter>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Base App Icon Outline & Background -->
+  <rect x="24" y="24" width="464" height="464" rx="100" ry="100" fill="url(#bgGrad)"/>
+  
+  <!-- Outer Gold Border (Squircle Frame) -->
+  <rect x="24" y="24" width="464" height="464" rx="100" ry="100" fill="none" stroke="url(#goldRim)" stroke-width="12" filter="url(#shadow3d)"/>
+  <rect x="33" y="33" width="446" height="446" rx="92" ry="92" fill="none" stroke="#2a2211" stroke-width="2"/>
+
+  <!-- ==================== WEDDING RINGS (TOP RIGHT) ==================== -->
+  <g filter="url(#shadow3d)">
+    <!-- Intertwined Gold Band (Rear/Lower) -->
+    <circle cx="346" cy="180" r="62" fill="none" stroke="url(#goldDark)" stroke-width="16"/>
+    <circle cx="346" cy="180" r="62" fill="none" stroke="url(#goldLight)" stroke-width="10"/>
+
+    <!-- Platinum Diamond Ring (Front/Upper) -->
+    <circle cx="372" cy="152" r="66" fill="none" stroke="url(#platGrad)" stroke-width="16"/>
+    
+    <!-- Channel Diamonds on Platinum Ring -->
+    <g fill="#ffffff">
+      <circle cx="330" cy="110" r="3" />
+      <circle cx="345" cy="98" r="3.2" />
+      <circle cx="365" cy="90" r="3.5" />
+      <circle cx="388" cy="90" r="3.5" />
+      <circle cx="408" cy="98" r="3.2" />
+      <circle cx="423" cy="112" r="3" />
+      <circle cx="433" cy="130" r="2.8" />
+    </g>
+
+    <!-- Solitaire Diamond Crown -->
+    <g transform="translate(377, 84)">
+      <!-- Prongs -->
+      <path d="M-10,2 L-5,-16 L5,-16 L10,2 Z" fill="url(#platGrad)"/>
+      <!-- Brilliant Cut Gem -->
+      <polygon points="0,-24 16,-12 11,-4 -11,-4 -16,-12" fill="#eaf6ff" stroke="#a3c4dc" stroke-width="1"/>
+      <polygon points="0,-24 0,-4 11,-4 16,-12" fill="#ffffff" opacity="0.6"/>
+      <polygon points="0,-24 -6,-12 0,-4 6,-12" fill="#ffffff"/>
+      <!-- Sparkle -->
+      <polygon points="0,-28 2,-20 9,-20 3,-16 5,-8 0,-13 -5,-8 -3,-16 -9,-20 -2,-20" fill="#ffffff" filter="url(#glow)"/>
     </g>
   </g>
-  <defs>
-    <clipPath id="clip0_7960_43945">
-      <rect width="180" height="180" fill="white" />
-    </clipPath>
-  </defs>
+
+  <!-- ==================== LETTER "A" (3D GOLD) ==================== -->
+  <g filter="url(#shadow3d)">
+    <!-- 3D Bevel/Extrusion Dark Layers -->
+    <polygon points="175,98 165,108 85,290 98,298 128,298 148,245 208,245 228,298 268,298 185,98" fill="url(#goldDark)"/>
+    
+    <!-- Front Face -->
+    <polygon points="178,105 106,286 138,286 156,236 214,236 232,286 260,286" fill="url(#goldLight)"/>
+    
+    <!-- Inner Counter Cutout -->
+    <polygon points="178,142 163,205 207,205" fill="#0d0d0f"/>
+    <polygon points="178,146 166,201 202,201" fill="url(#goldDark)"/>
+    <polygon points="178,154 170,195 196,195" fill="#141416"/>
+
+    <!-- Left Chiseled Spine (Highlight) -->
+    <polygon points="178,105 185,116 148,236 138,286 126,286 172,112" fill="#fff9e6" opacity="0.6"/>
+    <!-- Crossbar 3D facets -->
+    <polygon points="156,224 214,224 219,236 151,236" fill="url(#goldRim)"/>
+    
+    <!-- Pave Diamond Accents on 'A' -->
+    <g>
+      <use href="#sparkle" x="178" y="125"/>
+      <use href="#sparkle" x="171" y="145"/>
+      <use href="#sparkle" x="163" y="170"/>
+      <use href="#sparkle" x="154" y="200"/>
+      <use href="#sparkle" x="144" y="235"/>
+      <use href="#sparkle" x="134" y="265"/>
+      <use href="#sparkle" x="175" y="230"/>
+      <use href="#sparkle" x="195" y="230"/>
+    </g>
+  </g>
+
+  <!-- ==================== LETTER "M" (3D GOLD) ==================== -->
+  <g filter="url(#shadow3d)">
+    <!-- 3D Bevel/Extrusion Dark Layers -->
+    <polygon points="90,420 90,290 120,290 170,368 220,290 250,290 250,420 224,420 224,334 182,400 158,400 116,334 116,420" fill="url(#goldDark)"/>
+    
+    <!-- Front Face -->
+    <polygon points="95,415 95,296 118,296 170,378 222,296 245,296 245,415 228,415 228,326 179,404 161,404 112,326 112,415" fill="url(#goldLight)"/>
+
+    <!-- Chamfer / Bevel Highlights -->
+    <polygon points="95,296 106,306 106,415 95,415" fill="#ffffff" opacity="0.4"/>
+    <polygon points="118,296 170,378 165,385 112,306" fill="#fff7d9" opacity="0.7"/>
+    <polygon points="222,296 228,326 179,404 170,392" fill="#573e0c" opacity="0.6"/>
+    <polygon points="245,296 245,415 236,406 236,306" fill="#fadc7d" opacity="0.5"/>
+
+    <!-- Pave Diamond Accents on 'M' -->
+    <g>
+      <use href="#sparkle" x="103" y="320"/>
+      <use href="#sparkle" x="103" y="350"/>
+      <use href="#sparkle" x="103" y="380"/>
+      <use href="#sparkle" x="103" y="405"/>
+      <use href="#sparkle" x="133" y="335"/>
+      <use href="#sparkle" x="150" y="360"/>
+      <use href="#sparkle" x="190" y="360"/>
+      <use href="#sparkle" x="207" y="335"/>
+      <use href="#sparkle" x="236" y="350"/>
+      <use href="#sparkle" x="236" y="380"/>
+      <use href="#sparkle" x="236" y="405"/>
+    </g>
+  </g>
+
+  <!-- ==================== LUXURY WHITE & GOLD ROSE ==================== -->
+  <g filter="url(#shadow3d)">
+    <!-- Golden Filigree Leaves -->
+    <g stroke="url(#goldLight)" stroke-width="2" fill="none">
+      <!-- Top Right Leaf -->
+      <path d="M380,270 Q435,240 450,285 Q405,310 380,270 Z" fill="#241d11" stroke-width="2.5"/>
+      <path d="M380,270 Q415,268 450,285"/>
+      <path d="M400,270 Q415,260 425,262"/>
+      <path d="M410,277 Q428,276 438,280"/>
+
+      <!-- Bottom Leaves -->
+      <path d="M305,420 Q285,465 320,475 Q340,440 305,420 Z" fill="#1f1a10" stroke-width="2.5"/>
+      <path d="M305,420 Q310,450 320,475"/>
+      <path d="M420,410 Q450,455 425,475 Q395,445 420,410 Z" fill="#1f1a10" stroke-width="2.5"/>
+      <path d="M420,410 Q428,445 425,475"/>
+    </g>
+
+    <!-- Outer Layer Large White Petals -->
+    <path d="M290,360 C265,315 325,265 375,275 C410,282 445,310 440,355 C435,405 385,445 340,435 C295,425 275,395 290,360 Z" 
+          fill="url(#petalGrad2)" stroke="url(#goldRim)" stroke-width="2"/>
+
+    <path d="M285,345 C270,385 305,430 355,438 C395,445 440,420 445,370 C450,330 405,290 385,285 C335,270 295,310 285,345 Z" 
+          fill="url(#petalGrad1)" stroke="url(#goldLight)" stroke-width="2"/>
+
+    <!-- Mid Layer Overlapping Curved Petals -->
+    <path d="M305,335 C310,295 370,290 400,310 C430,330 435,385 395,410 C355,430 315,400 305,335 Z" 
+          fill="url(#petalGrad2)" stroke="url(#goldRim)" stroke-width="2.5"/>
+
+    <path d="M320,380 C305,340 330,310 365,308 C405,305 425,335 415,375 C405,410 345,415 320,380 Z" 
+          fill="url(#petalGrad1)" stroke="url(#goldLight)" stroke-width="2"/>
+
+    <path d="M335,330 C345,305 390,305 405,330 C420,360 395,395 365,392 C335,390 325,355 335,330 Z" 
+          fill="url(#petalGrad2)" stroke="url(#goldRim)" stroke-width="2.2"/>
+
+    <!-- Inner Rose Bud Core Swirls -->
+    <path d="M350,340 C355,320 385,320 392,338 C400,360 380,378 362,374 C348,370 342,352 350,340 Z" 
+          fill="url(#petalGrad1)" stroke="url(#goldLight)" stroke-width="2"/>
+
+    <path d="M360,345 Q372,332 384,345 Q382,362 368,362 Q356,358 360,345 Z" 
+          fill="url(#goldDark)" stroke="url(#goldLight)" stroke-width="1.8"/>
+
+    <path d="M366,348 A5,5 0 1,1 374,352" 
+          fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+  </g>
+
+  <!-- Sparkle Highlights / Floating Magic Dust -->
+  <g fill="#ffffff" opacity="0.85" filter="url(#glow)">
+    <!-- Ambient Glistening Stars -->
+    <path d="M260,80 Q260,92 250,92 Q260,92 260,104 Q260,92 270,92 Q260,92 260,80 Z" />
+    <path d="M85,210 Q85,218 78,218 Q85,218 85,226 Q85,218 92,218 Q85,218 85,210 Z" />
+    <path d="M450,210 Q450,220 440,220 Q450,220 450,230 Q450,220 460,220 Q450,220 450,210 Z" />
+    <path d="M255,445 Q255,452 248,452 Q255,452 255,459 Q255,452 262,452 Q255,452 255,445 Z" />
+    
+    <circle cx="275" cy="140" r="1.5"/>
+    <circle cx="160" cy="80" r="1.2"/>
+    <circle cx="435" cy="165" r="1.8"/>
+    <circle cx="310" cy="245" r="1.5"/>
+  </g>
 </svg>
