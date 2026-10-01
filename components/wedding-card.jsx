@@ -18,56 +18,6 @@ import {
 import confetti from "canvas-confetti";
 
 /* ------------------------------------------------------------------ */
-/*  Interactive Screen Touch Petal, Rose & Heart Sparkle Generator     */
-/* ------------------------------------------------------------------ */
-function TouchBloomSparkleEffect() {
-  const [particles, setParticles] = useState([]);
-
-  useEffect(() => {
-    const handleTouchOrClick = (e) => {
-      const pageX = e.clientX || (e.touches && e.touches[0] ? e.touches[0].clientX : null);
-      const pageY = e.clientY || (e.touches && e.touches[0] ? e.touches[0].clientY : null);
-
-      if (!pageX || !pageY) return;
-
-      const icons = ["🌹", "💖", "🌸", "✨", "🌺", "💕"];
-      const newItems = Array.from({ length: 6 }).map(() => ({
-        id: Date.now() + Math.random(),
-        x: pageX,
-        y: pageY,
-        icon: icons[Math.floor(Math.random() * icons.length)],
-        tx: (Math.random() - 0.5) * 110 + "px",
-        ty: (Math.random() - 0.6) * 120 + "px",
-      }));
-
-      setParticles((prev) => [...prev.slice(-20), ...newItems]);
-    };
-
-    window.addEventListener("pointerdown", handleTouchOrClick);
-    return () => window.removeEventListener("pointerdown", handleTouchOrClick);
-  }, []);
-
-  return (
-    <div className="fixed inset-0 pointer-events-none z-[9999] overflow-hidden">
-      {particles.map((p) => (
-        <span
-          key={p.id}
-          className="touch-flower-particle select-none"
-          style={{
-            left: `${p.x}px`,
-            top: `${p.y}px`,
-            "--tx": p.tx,
-            "--ty": p.ty,
-          }}
-        >
-          {p.icon}
-        </span>
-      ))}
-    </div>
-  );
-}
-
-/* ------------------------------------------------------------------ */
 /*  Door Opening, Ribbon Untie & Blur Transition Keyframes            */
 /* ------------------------------------------------------------------ */
 const ENTRANCE_CSS = `
@@ -479,7 +429,7 @@ function AngelSvg() {
   return (
     <svg
       viewBox="-40 0 480 440"
-      className="block w-full max-w-[200px] sm:max-w-xs md:max-w-sm mx-auto overflow-visible select-none drop-shadow-[0_12px_28px_rgba(217,119,6,0.3)]"
+      className="block w-full max-w-xs sm:max-w-sm md:max-w-md mx-auto overflow-visible select-none drop-shadow-[0_12px_28px_rgba(217,119,6,0.3)]"
       role="img"
       aria-label="Celestial Angel"
     >
@@ -612,11 +562,11 @@ function GlobalFloatingRings() {
         className={`pointer-events-auto cursor-pointer absolute transition-all duration-1000 ease-in-out ${
           isMerged
             ? "top-1/2 left-1/2 -translate-x-full -translate-y-1/2 scale-110 z-50"
-            : "top-14 sm:top-28 left-2 sm:left-12 anim-drift-ring-1"
+            : "top-28 left-4 sm:left-12 anim-drift-ring-1"
         }`}
       >
-        <div className="relative group p-1 sm:p-2">
-          <svg viewBox="0 0 80 80" className="w-11 h-11 sm:w-16 sm:h-16 drop-shadow-[0_0_15px_rgba(217,119,6,0.85)]">
+        <div className="relative group p-2">
+          <svg viewBox="0 0 80 80" className="w-14 h-14 sm:w-16 sm:h-16 drop-shadow-[0_0_15px_rgba(217,119,6,0.85)]">
             <defs>
               <linearGradient id="ringAGrad" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stopColor="#FFFBEB" />
@@ -653,11 +603,11 @@ function GlobalFloatingRings() {
         className={`pointer-events-auto cursor-pointer absolute transition-all duration-1000 ease-in-out ${
           isMerged
             ? "top-1/2 left-1/2 translate-x-0 -translate-y-1/2 scale-110 z-50"
-            : "top-20 sm:top-40 right-2 sm:right-12 anim-drift-ring-2"
+            : "top-40 right-4 sm:right-12 anim-drift-ring-2"
         }`}
       >
-        <div className="relative group p-1 sm:p-2">
-          <svg viewBox="0 0 80 80" className="w-11 h-11 sm:w-16 sm:h-16 drop-shadow-[0_0_15px_rgba(217,119,6,0.85)]">
+        <div className="relative group p-2">
+          <svg viewBox="0 0 80 80" className="w-14 h-14 sm:w-16 sm:h-16 drop-shadow-[0_0_15px_rgba(217,119,6,0.85)]">
             <defs>
               <linearGradient id="ringMGrad" x1="100%" y1="0%" x2="0%" y2="100%">
                 <stop offset="0%" stopColor="#FFF9E6" />
@@ -895,13 +845,13 @@ function AngelAndBloomingQuotes() {
   const b = BLESSINGS[currIdx];
 
   return (
-    <div className="relative w-full max-w-2xl mx-auto my-3 sm:my-4 flex flex-col items-center">
+    <div className="relative w-full max-w-2xl mx-auto my-4 flex flex-col items-center">
       <div className="angel-float relative z-10 pointer-events-none mb-1">
         <AngelSvg />
       </div>
 
       <div className="relative z-20 w-full px-3 sm:px-6">
-        <div className="relative rounded-3xl border-2 border-amber-400/80 bg-gradient-to-b from-[#FFFDF9] via-[#FAF6EE] to-[#FFF4E0] p-4 sm:p-8 text-center shadow-xl shadow-amber-900/10 backdrop-blur-md overflow-hidden">
+        <div className="relative rounded-3xl border-2 border-amber-400/80 bg-gradient-to-b from-[#FFFDF9] via-[#FAF6EE] to-[#FFF4E0] p-6 sm:p-8 text-center shadow-xl shadow-amber-900/10 backdrop-blur-md overflow-hidden">
           <div className="absolute -top-12 -right-12 w-32 h-32 bg-amber-200/40 rounded-full blur-2xl pointer-events-none" />
           <div className="absolute -bottom-12 -left-12 w-32 h-32 bg-amber-300/30 rounded-full blur-2xl pointer-events-none" />
 
@@ -912,7 +862,7 @@ function AngelAndBloomingQuotes() {
               <span className="text-amber-500 animate-spin [animation-duration:8s]">🌸</span>
             </div>
 
-            <blockquote className="min-h-[3.5rem] sm:min-h-[4.5rem] flex items-center justify-center text-xs sm:text-base italic font-medium leading-relaxed text-stone-800 font-serif">
+            <blockquote className="min-h-[4.5rem] flex items-center justify-center text-sm sm:text-base italic font-medium leading-relaxed text-stone-800 font-serif">
               “{b.quote}”
             </blockquote>
 
@@ -1021,9 +971,6 @@ export default function WeddingCard() {
   return (
     <div className="min-h-screen bg-[#FFFDF9] text-neutral-900 font-serif relative overflow-x-hidden selection:bg-amber-400 selection:text-black">
       
-      {/* Tap & Touch Blossom Effect */}
-      <TouchBloomSparkleEffect />
-
       {/* 3D Door Entrance with Ribbon Untying and Blur Transition */}
       {!isGateOpen && (
         <CinematicEntrance
@@ -1073,32 +1020,8 @@ export default function WeddingCard() {
           100% { transform: translate(-10px, 60px) rotate(6deg); }
         }
 
-        /* Floating Touch Petal Animation */
-        @keyframes touchFloat {
-          0% {
-            opacity: 1;
-            transform: translate(-50%, -50%) scale(0.6) rotate(0deg);
-          }
-          50% {
-            opacity: 0.9;
-            transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(1.2) rotate(180deg);
-          }
-          100% {
-            opacity: 0;
-            transform: translate(calc(-50% + (var(--tx) * 1.4)), calc(-50% + (var(--ty) * 1.4) - 25px)) scale(1.5) rotate(360deg);
-          }
-        }
-
-        .touch-flower-particle {
-          position: fixed;
-          pointer-events: none;
-          z-index: 9999;
-          font-size: 1.15rem;
-          animation: touchFloat 0.95s cubic-bezier(0.12, 0.8, 0.32, 1) forwards;
-        }
-
         @media (prefers-reduced-motion: reduce) {
-          .wing-r, .wing-l, .angel-float, .halo, .bloom-flash, .anim-drift-ring-1, .anim-drift-ring-2, .touch-flower-particle {
+          .wing-r, .wing-l, .angel-float, .halo, .bloom-flash, .anim-drift-ring-1, .anim-drift-ring-2 {
             animation: none !important;
           }
         }
@@ -1118,18 +1041,18 @@ export default function WeddingCard() {
         <a href="#location" className="text-xs uppercase tracking-widest font-bold text-neutral-800 hover:text-amber-600 transition">Venue Map</a>
       </nav>
 
-      <div className="fixed top-3 right-3 sm:top-5 sm:right-5 z-40 lg:hidden">
+      <div className="fixed top-5 right-5 z-40 lg:hidden">
         <button
           onClick={() => setIsNavOpen(!isNavOpen)}
           aria-label="Navigation Menu"
-          className="p-2.5 sm:p-3 bg-white/95 border-2 border-amber-500 rounded-full shadow-lg text-amber-800 backdrop-blur-md hover:bg-neutral-100 transition"
+          className="p-3 bg-white/95 border-2 border-amber-500 rounded-full shadow-lg text-amber-800 backdrop-blur-md hover:bg-neutral-100 transition"
         >
-          {isNavOpen ? <X className="w-4 h-4 sm:w-5 sm:h-5 text-black" /> : <Menu className="w-4 h-4 sm:w-5 sm:h-5 text-black" />}
+          {isNavOpen ? <X className="w-5 h-5 text-black" /> : <Menu className="w-5 h-5 text-black" />}
         </button>
       </div>
 
       {isNavOpen && (
-        <div className="lg:hidden fixed top-16 right-3 sm:top-20 sm:right-5 z-40 bg-white/95 border-2 border-amber-500/60 backdrop-blur-xl p-5 rounded-2xl shadow-2xl flex flex-col gap-3 min-w-[200px] text-sm">
+        <div className="lg:hidden fixed top-20 right-5 z-40 bg-white/95 border-2 border-amber-500/60 backdrop-blur-xl p-5 rounded-2xl shadow-2xl flex flex-col gap-3 min-w-[200px] text-sm">
           <a href="#hero" onClick={() => setIsNavOpen(false)} className="text-neutral-900 font-semibold hover:text-amber-600 transition">Welcome</a>
           <a href="#countdown" onClick={() => setIsNavOpen(false)} className="text-neutral-900 font-semibold hover:text-amber-600 transition">Countdown</a>
           <a href="#details" onClick={() => setIsNavOpen(false)} className="text-neutral-900 font-semibold hover:text-amber-600 transition">Ceremony &amp; Reception</a>
@@ -1150,10 +1073,10 @@ export default function WeddingCard() {
         <button
           onClick={toggleMusic}
           title={isPlaying ? "Pause Wedding Song" : "Play Wedding Song"}
-          className="relative w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-amber-400 bg-neutral-950 flex items-center justify-center shadow-2xl transition-transform hover:scale-105"
+          className="relative w-14 h-14 rounded-full border-2 border-amber-400 bg-neutral-950 flex items-center justify-center shadow-2xl transition-transform hover:scale-105"
         >
           <div className="absolute inset-1 rounded-full border border-neutral-800" />
-          <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-gradient-to-tr from-amber-600 via-yellow-300 to-amber-500 border border-white flex items-center justify-center">
+          <div className="w-5 h-5 rounded-full bg-gradient-to-tr from-amber-600 via-yellow-300 to-amber-500 border border-white flex items-center justify-center">
             <div className="w-1.5 h-1.5 rounded-full bg-black" />
           </div>
           <div className="absolute inset-0 flex items-center justify-center">
@@ -1171,30 +1094,27 @@ export default function WeddingCard() {
       {/* ========================================================================= */}
       <section
         id="hero"
-        className="relative min-h-[92vh] sm:min-h-screen flex flex-col items-center justify-start text-center px-3 sm:px-4 pt-4 sm:pt-20 pb-10 sm:pb-16 overflow-hidden bg-gradient-to-b from-white via-[#FFFDF9] to-[#FAF6EE]"
+        className="relative min-h-screen flex flex-col items-center justify-center text-center px-4 pt-2 pb-16 overflow-hidden bg-gradient-to-b from-white via-[#FFFDF9] to-[#FAF6EE]"
       >
         <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_center,rgba(217,119,6,0.1)_0,transparent_75%)]" />
 
-        {/* Top Rings Moved Upward */}
-        <div className="-mt-1 mb-0 sm:mb-1 scale-90 sm:scale-100">
-          <TopRings />
-        </div>
+        <TopRings />
 
-        <p className="text-amber-800 uppercase tracking-widest text-[10px] sm:text-sm font-sans font-bold -mt-1 mb-1">
+        <p className="text-amber-800 uppercase tracking-widest text-xs sm:text-sm font-sans font-bold mb-1">
           In God's Eternal Grace &amp; Love
         </p>
-        <h1 className="text-3xl sm:text-6xl lg:text-7xl font-bold italic tracking-wide text-neutral-950 mb-2 sm:mb-6">
+        <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold italic tracking-wide text-neutral-950 mb-6">
           Austin <span className="text-amber-600">&amp;</span> Merin
         </h1>
 
-        {/* Full Couple Portrait: Fits above the fold on mobile without scrolling */}
-        <div className="relative w-full max-w-sm sm:max-w-2xl flex justify-center my-1 sm:my-4 z-20 px-1 sm:px-4">
-          <div className="w-full p-2 sm:p-3.5 bg-gradient-to-t from-amber-600 via-amber-300 to-yellow-200 rounded-3xl shadow-[0_0_50px_rgba(212,175,55,0.35)]">
-            <div className="bg-white p-1.5 sm:p-2 rounded-[22px] flex items-center justify-center overflow-hidden">
+        {/* Full Couple Portrait */}
+        <div className="relative w-full max-w-2xl flex justify-center my-4 z-20 px-2 sm:px-4">
+          <div className="w-full p-2.5 sm:p-3.5 bg-gradient-to-t from-amber-600 via-amber-300 to-yellow-200 rounded-3xl shadow-[0_0_50px_rgba(212,175,55,0.35)]">
+            <div className="bg-white p-2 rounded-[22px] flex items-center justify-center overflow-hidden">
               <img
                 src="/couple.jpg"
                 alt="Austin & Merin Wedding Portrait"
-                className="w-full h-auto max-h-[46vh] sm:max-h-[80vh] object-contain rounded-[18px] filter contrast-105 block mx-auto transition-transform hover:scale-[1.01]"
+                className="w-full h-auto max-h-[80vh] object-contain rounded-[18px] filter contrast-105 block mx-auto transition-transform hover:scale-[1.01]"
                 onError={(e) => {
                   e.target.src =
                     "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=1200";
@@ -1207,7 +1127,7 @@ export default function WeddingCard() {
         {/* Flapping Wings Angel & Flowing Flower Quotes */}
         <AngelAndBloomingQuotes />
 
-        <p className="text-neutral-700 text-xs sm:text-sm max-w-lg mt-3 sm:mt-6 leading-relaxed z-20 px-2">
+        <p className="text-neutral-700 text-sm max-w-lg mt-6 leading-relaxed z-20">
           With immense joy, deep respect, and gratitude in our hearts, we cordially invite you and your family to witness and celebrate the sacred sacrament of holy matrimony.
         </p>
       </section>
@@ -1215,15 +1135,15 @@ export default function WeddingCard() {
       {/* ========================================================================= */}
       {/* COUNTDOWN & CLASPING HANDS SECTION (2 COLUMNS PER ROW IN MOBILE VIEW)     */}
       {/* ========================================================================= */}
-      <section id="countdown" className="py-12 sm:py-16 bg-neutral-950 text-white border-y-2 border-amber-500/40 text-center relative overflow-hidden">
+      <section id="countdown" className="py-16 bg-neutral-950 text-white border-y-2 border-amber-500/40 text-center relative overflow-hidden">
         <ResponsiveClaspingHands isHeld={isHeldTime} progress={timelineProgress} />
 
-        <h2 className="text-[11px] sm:text-xs uppercase tracking-widest text-amber-400 font-sans font-bold mb-4 sm:mb-6 mt-3 sm:mt-4">
+        <h2 className="text-xs uppercase tracking-widest text-amber-400 font-sans font-bold mb-6 mt-4">
           Counting Down To The Sacred Solemnization
         </h2>
 
         {/* 2 columns on mobile, 4 columns on desktop */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 max-w-lg mx-auto px-4">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-lg mx-auto px-4">
           {[
             { label: "DAYS", value: timeLeft.days },
             { label: "HOURS", value: timeLeft.hours },
@@ -1232,9 +1152,9 @@ export default function WeddingCard() {
           ].map((item, idx) => (
             <div
               key={idx}
-              className="bg-white border-2 border-amber-400 p-3 sm:p-4 rounded-2xl shadow-[0_0_20px_rgba(212,175,55,0.3)] text-neutral-950 flex flex-col items-center justify-center"
+              className="bg-white border-2 border-amber-400 p-4 rounded-2xl shadow-[0_0_20px_rgba(212,175,55,0.3)] text-neutral-950 flex flex-col items-center justify-center"
             >
-              <div className="text-2xl sm:text-4xl font-extrabold text-neutral-950 font-mono">
+              <div className="text-3xl sm:text-4xl font-extrabold text-neutral-950 font-mono">
                 {item.value}
               </div>
               <div className="text-[10px] sm:text-xs text-amber-800 font-bold uppercase tracking-wider mt-1 font-sans">
