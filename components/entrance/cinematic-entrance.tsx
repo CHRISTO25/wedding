@@ -9,14 +9,15 @@ type Stage = 'idle' | 'untying' | 'doors' | 'ambiance' | 'turn' | 'finale' | 'ex
 
 const ORDER: Stage[] = ['idle', 'untying', 'doors', 'ambiance', 'turn', 'finale', 'exit']
 
+// Accelerated timeline so couple-back leaves quickly and crisply
 const TIMELINE: [Stage, number][] = [
-  ['doors', 1400],
-  ['ambiance', 2500],
-  ['turn', 5200],    // Smooth transition into front shot & couple details
-  ['finale', 8500],  // Window to appreciate the names & date
-  ['exit', 11600],   // Hold for covenant message and confetti
+  ['doors', 1300],
+  ['ambiance', 2300],
+  ['turn', 4200],    // Trimmed down so back image exits promptly without dragging
+  ['finale', 7400],  
+  ['exit', 10600],   
 ]
-const COMPLETE_AT = 13200
+const COMPLETE_AT = 12000
 
 const FOIL_TEXT =
   'animate-inv-foil bg-[linear-gradient(110deg,#6b4a12_0%,#b8892c_30%,#f7e1a1_45%,#b8892c_60%,#6b4a12_100%)] bg-[length:200%_100%] bg-clip-text font-script text-[2.9rem] leading-[1.05] text-transparent motion-reduce:animate-none sm:text-[3.4rem]'
@@ -57,7 +58,10 @@ function DoorPanel({ side, open }: { side: 'left' | 'right'; open: boolean }) {
       <img
         src="/images/door-panel.png"
         alt=""
-        className={`h-full w-full object-cover ${isLeft ? 'scale-103' : '-scale-x-103 scale-y-103'}`}
+        decoding="async"
+        className={`h-full w-full object-cover [image-rendering:-webkit-optimize-contrast] ${
+          isLeft ? 'scale-103' : '-scale-x-103 scale-y-103'
+        }`}
       />
       <div
         className={`absolute inset-y-0 w-2 bg-gradient-to-b from-[#fff2b8] via-[#c9972e] to-[#7a5513] ${
@@ -130,7 +134,7 @@ export function CinematicEntrance({
 
   return (
     <div
-      className={`fixed inset-0 z-50 overflow-hidden bg-[#0d0a06] transition-opacity duration-[1400ms] ease-out ${
+      className={`fixed inset-0 z-50 overflow-hidden bg-[#0d0a06] transition-opacity duration-[1200ms] ease-out ${
         exiting ? 'pointer-events-none opacity-0' : 'opacity-100'
       }`}
       aria-live="polite"
@@ -138,41 +142,47 @@ export function CinematicEntrance({
       {/* ---------- Marriage ambiance (behind doors) ---------- */}
       <div className="absolute inset-0" aria-hidden={!doorsOpen}>
         <div className="absolute inset-0 overflow-hidden">
-          {/* Couple Back */}
+          {/* Couple Back: zero transform animations to prevent mobile/GPU lag; quick 600ms opacity drop */}
           <img
             src="/images/couple-back.png"
             alt="Bride and groom standing at the floral altar, facing away"
-            className={`absolute inset-0 h-full w-full object-cover will-change-[opacity,transform] transition-[opacity,transform] duration-[1600ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
-              doorsOpen ? 'scale-100' : 'scale-105'
-            } ${turned ? 'opacity-0 scale-98 pointer-events-none' : 'opacity-100'}`}
+            decoding="async"
+            fetchPriority="high"
+            className={`absolute inset-0 h-full w-full object-cover transform-gpu [image-rendering:-webkit-optimize-contrast] will-change-opacity transition-opacity duration-[600ms] ease-[cubic-bezier(0.4,0,1,1)] ${
+              turned ? 'pointer-events-none opacity-0' : 'opacity-100'
+            }`}
           />
-          {/* Couple Front */}
+
+          {/* Couple Front: crisp 4k rendering and immediate smooth cross-in */}
           <img
             src="/images/couple-front.png"
             alt="Bride and groom turning around, smiling and holding hands"
-            className={`absolute inset-0 h-full w-full object-cover will-change-[opacity,transform] transition-[opacity,transform] duration-[1800ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
-              turned ? 'scale-100 opacity-100' : 'scale-104 opacity-0 pointer-events-none'
+            decoding="async"
+            fetchPriority="high"
+            className={`absolute inset-0 h-full w-full object-cover transform-gpu [image-rendering:-webkit-optimize-contrast] will-change-opacity transition-opacity duration-[800ms] ease-[cubic-bezier(0,0,0.2,1)] ${
+              turned ? 'opacity-100' : 'pointer-events-none opacity-0'
             }`}
           />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_45%,rgba(15,10,4,0.7)_100%)]" />
-          <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#0e0903]/90 via-[#0e0903]/50 to-transparent" />
+
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_45%,rgba(15,10,4,0.65)_100%)]" />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#0e0903]/90 via-[#0e0903]/40 to-transparent" />
         </div>
 
         {inAmbiance && <FallingPetals />}
 
-        {/* Couple Title & Date Overlay */}
+        {/* Couple Title & Date Overlay: razor sharp text rendered directly onto the GPU compositor */}
         <div
-          className={`absolute inset-x-0 bottom-[10%] px-6 text-center transition-all duration-1000 ease-out will-change-[transform,opacity] ${
-            turned ? 'translate-y-0 opacity-100' : 'translate-y-6 opacity-0 pointer-events-none'
+          className={`absolute inset-x-0 bottom-[10%] px-6 text-center transform-gpu will-change-[transform,opacity] transition-all duration-600 ease-out ${
+            turned ? 'translate-y-0 opacity-100 delay-100' : 'pointer-events-none translate-y-3 opacity-0'
           }`}
         >
-          <p className="font-serif text-xs uppercase tracking-[0.5em] text-[#f6e3b4] antialiased drop-shadow-md sm:text-sm">
+          <p className="font-serif text-xs uppercase tracking-[0.5em] text-[#f6e3b4] antialiased drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] sm:text-sm">
             The Wedding Of
           </p>
           <h2 className="mt-2 font-script text-6xl text-white antialiased drop-shadow-[0_4px_24px_rgba(212,175,55,0.7)] sm:text-8xl">
             {'Austin & Merin'}
           </h2>
-          <p className="mt-3 font-serif text-sm font-medium tracking-[0.35em] text-[#f6e3b4] antialiased drop-shadow-md">
+          <p className="mt-3 font-serif text-sm font-medium tracking-[0.35em] text-[#f6e3b4] antialiased drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
             {'07 · 11 · 2026'}
           </p>
         </div>
@@ -243,10 +253,8 @@ export function CinematicEntrance({
             aria-label="Untie the ribbon to open the wedding invitation of Austin and Merin"
             className="relative block aspect-[705/995] max-h-[86vh] w-[min(86vw,380px)] cursor-pointer select-none overflow-hidden rounded-[6px] bg-[url(/images/card-paper.png)] bg-[length:109%_138%] bg-[position:48%_50%] text-left shadow-[inset_0_1px_0_rgba(255,255,255,0.8),0_2px_3px_rgba(0,0,0,0.25),0_18px_30px_rgba(0,0,0,0.45),0_50px_90px_rgba(0,0,0,0.55)] outline-none focus-visible:ring-4 focus-visible:ring-[#D4AF37]/70"
           >
-            {/* Paper lighting */}
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_30%_15%,rgba(255,255,255,0.55),transparent_55%),linear-gradient(180deg,transparent_70%,rgba(120,90,40,0.12))]" />
 
-            {/* Lettering */}
             <div className="relative flex h-full flex-col items-center px-[14%] pt-[17%] text-center">
               <p className="font-serif text-[10px] font-semibold uppercase tracking-[0.42em] text-[#8a6417] antialiased sm:text-[11px]">
                 Together with their families
@@ -257,7 +265,6 @@ export function CinematicEntrance({
               <h1 className={FOIL_TEXT}>Merin</h1>
             </div>
 
-            {/* Bottom details */}
             <div className="pointer-events-none absolute inset-x-0 bottom-[15%] text-center">
               <p className="font-serif text-[10px] uppercase tracking-[0.35em] text-[#5a4320] antialiased">
                 Request the honour of your presence
@@ -267,11 +274,9 @@ export function CinematicEntrance({
               </p>
             </div>
 
-            {/* Ribbon */}
             <RibbonHalf side="left" untied={untied} />
             <RibbonHalf side="right" untied={untied} />
 
-            {/* Satin bow */}
             <div
               className={`absolute left-1/2 top-[60%] z-10 motion-reduce:animate-none ${
                 untied ? 'animate-inv-bow-untie' : 'animate-inv-bow-breathe'

@@ -1188,7 +1188,7 @@ export default function WeddingCard() {
             <p className="text-neutral-600 text-sm mt-3">
               <strong className="text-neutral-900">Little Flower Church</strong>
               <br />
-              Elamkunnu Road, Madappally, Kerala
+              Elamkunnu , Madappally, Kerala
             </p>
           </div>
 
@@ -1203,7 +1203,7 @@ export default function WeddingCard() {
             <p className="text-neutral-600 text-sm mt-3">
               <strong className="text-neutral-900">Church Parish Hall</strong>
               <br />
-              Little Flower Church Grounds, Madappally
+              Little Flower Church Grounds,Elamkunnu Madappally
             </p>
           </div>
         </div>
