@@ -455,7 +455,7 @@ function GlobalFloatingRings() {
         <div className="relative flex items-center justify-center">
           <div className="absolute w-36 h-36 rounded-full bg-red-500/30 blur-2xl animate-pulse" />
           <Heart className="w-24 h-24 text-red-600 fill-red-500 drop-shadow-[0_0_35px_rgba(220,38,38,0.95)] animate-bounce" />
-          <Sparkles className="w-8 h-8 text-amber-300 absolute -top-2 -right-2 animate-spin" />
+         
         </div>
         <span className="mt-2 text-sm uppercase tracking-widest text-red-700 bg-white/95 px-4 py-1 rounded-full border border-red-300 shadow font-sans font-extrabold animate-pulse">
           Two Hearts Form One Love
