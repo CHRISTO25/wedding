@@ -143,195 +143,6 @@ function RibbonBow({ untie }) {
 }
 
 /* ------------------------------------------------------------------ */
-/*  Blur-Vision 3D Door Entrance Component                            */
-/* ------------------------------------------------------------------ */
-function GrandDoorEntrance({ onStart, onComplete }) {
-  const [stage, setStage] = useState("idle"); // 'idle' -> 'untying' -> 'doors_open' -> 'vision_clear'
-  const timerRefs = useRef([]);
-
-  useEffect(() => {
-    return () => timerRefs.current.forEach(clearTimeout);
-  }, []);
-
-  const triggerOpen = () => {
-    if (stage !== "idle") return;
-    if (onStart) onStart();
-    setStage("untying");
-
-    // Sequence timing
-    timerRefs.current = [
-      setTimeout(() => setStage("doors_open"), 1200),
-      setTimeout(() => setStage("vision_clear"), 2700),
-      setTimeout(() => {
-        if (onComplete) onComplete();
-      }, 3900),
-    ];
-  };
-
-  const isUntied = stage !== "idle";
-  const doorsAjar = stage === "doors_open" || stage === "vision_clear";
-
-  return (
-    <div className="fixed inset-0 z-50 overflow-hidden [perspective:1800px] bg-neutral-950">
-      <style>{ENTRANCE_CSS}</style>
-
-      {/* Heavenly Blur Vision Backdrop Behind the Doors */}
-      <div 
-        className={`absolute inset-0 z-10 pointer-events-none transition-opacity duration-1000 ${
-          doorsAjar ? "opacity-100" : "opacity-0"
-        }`}
-        style={{
-          background: "radial-gradient(ellipse at center, rgba(255,248,225,0.95) 0%, rgba(254,243,199,0.85) 45%, rgba(251,191,36,0.3) 70%, transparent 100%)",
-          animation: doorsAjar ? "blurVisionFade 2.2s cubic-bezier(0.16, 1, 0.3, 1) forwards" : "none"
-        }}
-      >
-        {/* Dreamy Ethereal Aura and Light Rays */}
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-amber-200/50 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-amber-300/40 rounded-full blur-3xl animate-pulse" />
-        
-        {/* Soft Dream Clouds dispersing as doors pull back */}
-        <div 
-          className="absolute top-1/3 left-10 w-72 h-24 bg-white/70 rounded-full blur-xl"
-          style={{ animation: doorsAjar ? "cloudDriftL 2.4s ease-out forwards" : "none" }}
-        />
-        <div 
-          className="absolute top-1/2 right-10 w-80 h-28 bg-white/70 rounded-full blur-xl"
-          style={{ animation: doorsAjar ? "cloudDriftR 2.4s ease-out forwards" : "none" }}
-        />
-      </div>
-
-      {/* Left 3D Door */}
-      <div
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "50%",
-          height: "100%",
-          transformOrigin: "left center",
-          transition: "transform 2.2s cubic-bezier(0.65, 0, 0.15, 1), filter 1.8s ease-out",
-          transform: doorsAjar ? "rotateY(-112deg)" : "rotateY(0deg)",
-          filter: doorsAjar ? "blur(4px) brightness(1.2)" : "none",
-          background: "linear-gradient(135deg, #181424 0%, #291e3e 50%, #100b1a 100%)",
-          borderRight: "4px solid #D4AF37",
-          boxShadow: "inset 0 0 80px rgba(0,0,0,0.85), 25px 0 50px rgba(0,0,0,0.9)",
-          zIndex: 20
-        }}
-      >
-        <div className="absolute inset-6 sm:inset-12 border-2 border-amber-400/30 rounded-xl pointer-events-none flex flex-col justify-around p-4 shadow-inner">
-          <div className="w-full h-1/3 border border-amber-400/20 rounded-lg bg-white/[0.02]" />
-          <div className="w-full h-1/3 border border-amber-400/20 rounded-lg bg-white/[0.02]" />
-        </div>
-        {/* Ornate Gold Handle */}
-        <div className="absolute right-5 sm:right-7 top-1/2 -translate-y-1/2 w-4 sm:w-5 h-36 sm:h-48 rounded-full bg-gradient-to-b from-yellow-200 via-amber-400 to-amber-700 border-2 border-white/80 shadow-[0_0_20px_rgba(212,175,55,0.7)]" />
-      </div>
-
-      {/* Right 3D Door */}
-      <div
-        style={{
-          position: "absolute",
-          top: 0,
-          right: 0,
-          width: "50%",
-          height: "100%",
-          transformOrigin: "right center",
-          transition: "transform 2.2s cubic-bezier(0.65, 0, 0.15, 1), filter 1.8s ease-out",
-          transform: doorsAjar ? "rotateY(112deg)" : "rotateY(0deg)",
-          filter: doorsAjar ? "blur(4px) brightness(1.2)" : "none",
-          background: "linear-gradient(225deg, #181424 0%, #291e3e 50%, #100b1a 100%)",
-          borderLeft: "4px solid #D4AF37",
-          boxShadow: "inset 0 0 80px rgba(0,0,0,0.85), -25px 0 50px rgba(0,0,0,0.9)",
-          zIndex: 20
-        }}
-      >
-        <div className="absolute inset-6 sm:inset-12 border-2 border-amber-400/30 rounded-xl pointer-events-none flex flex-col justify-around p-4 shadow-inner">
-          <div className="w-full h-1/3 border border-amber-400/20 rounded-lg bg-white/[0.02]" />
-          <div className="w-full h-1/3 border border-amber-400/20 rounded-lg bg-white/[0.02]" />
-        </div>
-        {/* Ornate Gold Handle */}
-        <div className="absolute left-5 sm:left-7 top-1/2 -translate-y-1/2 w-4 sm:w-5 h-36 sm:h-48 rounded-full bg-gradient-to-b from-yellow-200 via-amber-400 to-amber-700 border-2 border-white/80 shadow-[0_0_20px_rgba(212,175,55,0.7)]" />
-      </div>
-
-      {/* Sealed Invitation Card wrapped with Satin Ribbon */}
-      <div 
-        className={`absolute inset-0 z-30 flex items-center justify-center transition-all duration-700 ${
-          doorsAjar ? "opacity-0 scale-125 pointer-events-none" : "opacity-100 scale-100"
-        }`}
-      >
-        <div 
-          onClick={triggerOpen}
-          role="button"
-          tabIndex={0}
-          title="Tap the ribbon to untie and open doors"
-          className="relative cursor-pointer select-none rounded-2xl shadow-[0_25px_60px_rgba(0,0,0,0.9),0_0_0_1px_#d9a93c] overflow-hidden"
-          style={{
-            width: "min(88vw, 360px)",
-            height: "min(72vh, 490px)",
-            background: "radial-gradient(circle at 35% 20%, rgba(255,255,255,0.96), transparent 65%), linear-gradient(160deg, #fffdf8, #f5ebd2)"
-          }}
-        >
-          {/* Card filigree border */}
-          <div className="absolute inset-3 border-2 border-double border-[#c9972e] pointer-events-none rounded-xl" />
-
-          {/* Lettering */}
-          <div className="pt-12 px-6 text-center font-serif text-[#4a2f12]">
-            <span className="text-[11px] uppercase tracking-widest text-amber-800 font-bold block">
-              Solemn Wedding Invitation
-            </span>
-            <h2 className="text-3xl sm:text-4xl italic font-bold my-4 leading-tight text-neutral-900">
-              Austin <br />
-              <span className="text-amber-600 text-2xl font-serif">&amp;</span> <br />
-              Merin
-            </h2>
-            <p className="text-xs uppercase tracking-widest text-stone-700 font-medium">
-              Invite you to their wedding
-            </p>
-            <p className="text-sm font-serif italic text-amber-900 mt-2 font-semibold">
-              7 · 11 · 2026
-            </p>
-          </div>
-
-          {/* Vertical Satin Ribbon Band */}
-          <div
-            className="absolute top-0 bottom-0 left-1/2 w-12 -ml-6 shadow-xl transition-transform duration-1000 ease-in"
-            style={{
-              background: "linear-gradient(90deg, #5c0f1b, #b52d40 22%, #ffb3bd 46%, #c9384b 66%, #6e1220)",
-              transform: isUntied ? "translateY(-120%) rotate(3deg)" : "none",
-            }}
-          >
-            <div className="absolute inset-y-0 left-1.5 right-1.5 border-l border-r border-dashed border-amber-200/70" />
-          </div>
-
-          {/* Horizontal Satin Ribbon Band */}
-          <div
-            className="absolute left-0 right-0 top-[58%] h-12 -mt-6 shadow-xl transition-transform duration-1000 ease-in"
-            style={{
-              background: "linear-gradient(180deg, #5c0f1b, #b52d40 22%, #ffb3bd 46%, #c9384b 66%, #6e1220)",
-              transform: isUntied ? "translateX(120%) rotate(-3deg)" : "none",
-            }}
-          >
-            <div className="absolute inset-x-0 top-1.5 bottom-1.5 border-t border-b border-dashed border-amber-200/70" />
-          </div>
-
-          {/* Interactive Silk Knot Bow */}
-          <div className="absolute left-1/2 top-[58%] -translate-x-1/2 -translate-y-1/2 z-20">
-            <RibbonBow untie={isUntied} />
-          </div>
-
-          <div 
-            className={`absolute bottom-4 inset-x-0 text-center text-[10px] tracking-widest uppercase font-bold text-amber-900 transition-opacity duration-300 ${
-              isUntied ? "opacity-0" : "opacity-100"
-            }`}
-          >
-            Touch Ribbon to Untie &amp; Open
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/* ------------------------------------------------------------------ */
 /*  Blessing Quotes                                                   */
 /* ------------------------------------------------------------------ */
 const BLESSINGS = [
@@ -363,7 +174,7 @@ const BLESSINGS = [
 ];
 
 /* ------------------------------------------------------------------ */
-/*  Vector Angel with Wing Flapping                                    */
+/*  Vector Angel with Wing Flapping                                   */
 /* ------------------------------------------------------------------ */
 const ROWS = [
   { len: 185, w: 17, from: 28, to: 118, step: 10, fill: "url(#featherGold)" },
@@ -562,7 +373,7 @@ function GlobalFloatingRings() {
         className={`pointer-events-auto cursor-pointer absolute transition-all duration-1000 ease-in-out ${
           isMerged
             ? "top-1/2 left-1/2 -translate-x-full -translate-y-1/2 scale-110 z-50"
-            : "top-28 left-4 sm:left-12 anim-drift-ring-1"
+            : "top-20 sm:top-28 left-4 sm:left-12 anim-drift-ring-1"
         }`}
       >
         <div className="relative group p-2">
@@ -603,7 +414,7 @@ function GlobalFloatingRings() {
         className={`pointer-events-auto cursor-pointer absolute transition-all duration-1000 ease-in-out ${
           isMerged
             ? "top-1/2 left-1/2 translate-x-0 -translate-y-1/2 scale-110 z-50"
-            : "top-40 right-4 sm:right-12 anim-drift-ring-2"
+            : "top-32 sm:top-40 right-4 sm:right-12 anim-drift-ring-2"
         }`}
       >
         <div className="relative group p-2">
@@ -644,7 +455,7 @@ function GlobalFloatingRings() {
         <div className="relative flex items-center justify-center">
           <div className="absolute w-36 h-36 rounded-full bg-red-500/30 blur-2xl animate-pulse" />
           <Heart className="w-24 h-24 text-red-600 fill-red-500 drop-shadow-[0_0_35px_rgba(220,38,38,0.95)] animate-bounce" />
-          
+          <Sparkles className="w-8 h-8 text-amber-300 absolute -top-2 -right-2 animate-spin" />
         </div>
         <span className="mt-2 text-sm uppercase tracking-widest text-red-700 bg-white/95 px-4 py-1 rounded-full border border-red-300 shadow font-sans font-extrabold animate-pulse">
           Two Hearts Form One Love
@@ -829,7 +640,7 @@ function ResponsiveClaspingHands({ isHeld = false, progress = 0 }) {
 }
 
 /* ------------------------------------------------------------------ */
-/*  Angel Header with Flowing Flower-Bloomed Quotes (No Overlap)        */
+/*  Angel Header with Flowing Flower-Bloomed Quotes (No Overlap)      */
 /* ------------------------------------------------------------------ */
 function AngelAndBloomingQuotes() {
   const [currIdx, setCurrIdx] = useState(0);
@@ -882,6 +693,9 @@ function AngelAndBloomingQuotes() {
 /* ------------------------------------------------------------------ */
 /*  Main Component                                                    */
 /* ------------------------------------------------------------------ */
+// Section list in order: hero -> countdown -> details -> families -> location -> hero (single tour)
+const TOUR_SECTIONS = ["hero", "countdown", "details", "families", "location", "hero"];
+
 export default function WeddingCard() {
   const [isGateOpen, setIsGateOpen] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -889,6 +703,12 @@ export default function WeddingCard() {
   const [isHeldTime, setIsHeldTime] = useState(false);
   const [timelineProgress, setTimelineProgress] = useState(0);
   const audioRef = useRef(null);
+
+  // Auto-tour states
+  const [isAutoTourActive, setIsAutoTourActive] = useState(false);
+  const [tourStep, setTourStep] = useState(0);
+  const [tourProgressPct, setTourProgressPct] = useState(0);
+  const userInteractedRef = useRef(false);
 
   // Target Date: November 7, 2026 11:00:00 AM IST
   const targetDate = new Date("2026-11-07T11:00:00+05:30").getTime();
@@ -935,6 +755,73 @@ export default function WeddingCard() {
     return () => clearInterval(interval);
   }, [targetDate, startDate]);
 
+  /* ------------------------------------------------------------------ */
+  /*  Auto Tour Sequence: 2.5s per section, 1 round trip back to #hero  */
+  /* ------------------------------------------------------------------ */
+  useEffect(() => {
+    if (!isGateOpen) return;
+
+    // Start auto-tour automatically after 2 seconds from door opening
+    const startDelay = setTimeout(() => {
+      if (!userInteractedRef.current) {
+        setIsAutoTourActive(true);
+      }
+    }, 2000);
+
+    return () => clearTimeout(startDelay);
+  }, [isGateOpen]);
+
+  useEffect(() => {
+    if (!isAutoTourActive) return;
+
+    const intervalTime = 2500; // 2.5 seconds
+    const interval = setInterval(() => {
+      setTourStep((prev) => {
+        const nextStep = prev + 1;
+        if (nextStep < TOUR_SECTIONS.length) {
+          const targetId = TOUR_SECTIONS[nextStep];
+          const el = document.getElementById(targetId);
+          if (el) {
+            el.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+          return nextStep;
+        } else {
+          // Finished one single full cycle back to hero!
+          setIsAutoTourActive(false);
+          clearInterval(interval);
+          return 0;
+        }
+      });
+    }, intervalTime);
+
+    return () => clearInterval(interval);
+  }, [isAutoTourActive]);
+
+  // Track circular countdown animation progress for the current step (0 to 100%)
+  useEffect(() => {
+    if (!isAutoTourActive) {
+      setTourProgressPct(0);
+      return;
+    }
+    const startTime = Date.now();
+    const duration = 2500;
+    const ticker = setInterval(() => {
+      const elapsed = Date.now() - startTime;
+      const pct = Math.min(100, (elapsed / duration) * 100);
+      setTourProgressPct(pct);
+    }, 50);
+
+    return () => clearInterval(ticker);
+  }, [tourStep, isAutoTourActive]);
+
+  // Stop tour if user manually starts scrolling with fingers or mouse wheel
+  const handleUserManualTouch = () => {
+    if (isAutoTourActive) {
+      userInteractedRef.current = true;
+      setIsAutoTourActive(false);
+    }
+  };
+
   const handleEntranceStart = () => {
     confetti({
       particleCount: 160,
@@ -967,8 +854,24 @@ export default function WeddingCard() {
     }
   };
 
+  const toggleAutoTour = () => {
+    if (isAutoTourActive) {
+      setIsAutoTourActive(false);
+    } else {
+      userInteractedRef.current = false;
+      setTourStep(0);
+      const el = document.getElementById("hero");
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+      setIsAutoTourActive(true);
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-[#FFFDF9] text-neutral-900 font-serif relative overflow-x-hidden selection:bg-amber-400 selection:text-black">
+    <div 
+      onTouchStart={handleUserManualTouch}
+      onWheel={handleUserManualTouch}
+      className="min-h-screen bg-[#FFFDF9] text-neutral-900 font-serif relative overflow-x-hidden selection:bg-amber-400 selection:text-black"
+    >
       
       {/* 3D Door Entrance with Ribbon Untying and Blur Transition */}
       {!isGateOpen && (
@@ -1038,20 +941,83 @@ export default function WeddingCard() {
         <a href="#details" className="text-xs uppercase tracking-widest font-bold text-neutral-800 hover:text-amber-600 transition">Ceremony</a>
         <a href="#families" className="text-xs uppercase tracking-widest font-bold text-neutral-800 hover:text-amber-600 transition">Families</a>
         <a href="#location" className="text-xs uppercase tracking-widest font-bold text-neutral-800 hover:text-amber-600 transition">Venue Map</a>
+
+        {/* Desktop Quick Auto-Tour Button */}
+        <button
+          onClick={toggleAutoTour}
+          className="ml-2 px-3 py-1 bg-amber-100 hover:bg-amber-200 border border-amber-400 text-amber-900 rounded-full text-[11px] font-sans font-bold flex items-center gap-1.5 transition"
+        >
+          <span className={`w-2 h-2 rounded-full ${isAutoTourActive ? "bg-amber-600 animate-ping" : "bg-neutral-400"}`} />
+          {isAutoTourActive ? "Pause Tour" : "Auto Tour"}
+        </button>
       </nav>
 
-      <div className="fixed top-5 right-5 z-40 lg:hidden">
-        <button
-          onClick={() => setIsNavOpen(!isNavOpen)}
-          aria-label="Navigation Menu"
-          className="p-3 bg-white/95 border-2 border-amber-500 rounded-full shadow-lg text-amber-800 backdrop-blur-md hover:bg-neutral-100 transition"
-        >
-          {isNavOpen ? <X className="w-5 h-5 text-black" /> : <Menu className="w-5 h-5 text-black" />}
-        </button>
+      {/* MOBILE HAMBURGER WITH CIRCULAR TIMER RING FOR 2.5s INTERVALS */}
+      <div className="fixed top-5 right-5 z-40 lg:hidden flex items-center gap-2">
+        <div className="relative">
+          {/* Circular Countdown Ring Indicator around Hamburger */}
+          <svg className="absolute -inset-1.5 w-[52px] h-[52px] -rotate-90 pointer-events-none">
+            <circle
+              cx="26"
+              cy="26"
+              r="22"
+              stroke="#FDE68A"
+              strokeWidth="3"
+              fill="none"
+              opacity={isAutoTourActive ? "0.4" : "0"}
+            />
+            <circle
+              cx="26"
+              cy="26"
+              r="22"
+              stroke="#D97706"
+              strokeWidth="3.5"
+              strokeDasharray={2 * Math.PI * 22}
+              strokeDashoffset={2 * Math.PI * 22 * (1 - tourProgressPct / 100)}
+              strokeLinecap="round"
+              fill="none"
+              className="transition-all duration-75"
+              opacity={isAutoTourActive ? "1" : "0"}
+            />
+          </svg>
+
+          <button
+            onClick={() => setIsNavOpen(!isNavOpen)}
+            aria-label="Navigation Menu"
+            className="relative p-3 bg-white/95 border-2 border-amber-500 rounded-full shadow-lg text-amber-800 backdrop-blur-md hover:bg-neutral-100 transition flex items-center justify-center"
+          >
+            {isNavOpen ? <X className="w-5 h-5 text-black" /> : <Menu className="w-5 h-5 text-black" />}
+          </button>
+        </div>
       </div>
 
+      {/* Floating Notice when Auto-Tour is Running */}
+      {isAutoTourActive && (
+        <div className="fixed top-20 right-5 z-40 bg-neutral-900/90 text-amber-300 border border-amber-400/80 px-3.5 py-1.5 rounded-full text-xs font-sans shadow-xl backdrop-blur-md flex items-center gap-2 animate-pulse">
+          <span>Auto Tour: Showing {TOUR_SECTIONS[tourStep]}</span>
+          <button 
+            onClick={() => setIsAutoTourActive(false)} 
+            className="text-[10px] uppercase font-bold text-white bg-amber-600 px-2 py-0.5 rounded-full hover:bg-amber-700"
+          >
+            Stop
+          </button>
+        </div>
+      )}
+
       {isNavOpen && (
-        <div className="lg:hidden fixed top-20 right-5 z-40 bg-white/95 border-2 border-amber-500/60 backdrop-blur-xl p-5 rounded-2xl shadow-2xl flex flex-col gap-3 min-w-[200px] text-sm">
+        <div className="lg:hidden fixed top-20 right-5 z-40 bg-white/95 border-2 border-amber-500/60 backdrop-blur-xl p-5 rounded-2xl shadow-2xl flex flex-col gap-3 min-w-[210px] text-sm">
+          <div className="pb-2 mb-1 border-b border-amber-200 flex items-center justify-between">
+            <span className="text-xs font-bold uppercase tracking-wider text-amber-900">Navigation</span>
+            <button
+              onClick={() => {
+                setIsNavOpen(false);
+                toggleAutoTour();
+              }}
+              className="text-[11px] text-amber-700 font-bold bg-amber-100 px-2.5 py-1 rounded-full border border-amber-300"
+            >
+              {isAutoTourActive ? "Pause Tour" : "Start Tour (2.5s)"}
+            </button>
+          </div>
           <a href="#hero" onClick={() => setIsNavOpen(false)} className="text-neutral-900 font-semibold hover:text-amber-600 transition">Welcome</a>
           <a href="#countdown" onClick={() => setIsNavOpen(false)} className="text-neutral-900 font-semibold hover:text-amber-600 transition">Countdown</a>
           <a href="#details" onClick={() => setIsNavOpen(false)} className="text-neutral-900 font-semibold hover:text-amber-600 transition">Ceremony &amp; Reception</a>
@@ -1182,12 +1148,12 @@ export default function WeddingCard() {
             </div>
             <h3 className="text-xl font-bold text-neutral-950 mb-2">The Marriage Ceremony</h3>
             <p className="text-sm text-neutral-700 mb-1 flex items-center gap-2">
-              <Clock className="w-4 h-4 text-amber-600" /> Saturday, November 7, 2026 | 11:00 AM
+              <Clock className="w-4 h-4 text-amber-600" /> Saturday, November 7, 2026 | 11:00 AM[cite: 1]
             </p>
             <p className="text-neutral-600 text-sm mt-3">
               <strong className="text-neutral-900">Little Flower Church</strong>
               <br />
-              Elamkunnu , Madappally, Kerala
+              Elamkunnu Road, Madappally, Kerala[cite: 1]
             </p>
           </div>
 
@@ -1197,12 +1163,12 @@ export default function WeddingCard() {
             </div>
             <h3 className="text-xl font-bold text-neutral-950 mb-2">Marriage Reception</h3>
             <p className="text-sm text-neutral-700 mb-1 flex items-center gap-2">
-              <Clock className="w-4 h-4 text-amber-600" /> Saturday, November 7, 2026 | 12:30 PM
+              <Clock className="w-4 h-4 text-amber-600" /> Saturday, November 7, 2026 | 12:30 PM[cite: 1]
             </p>
             <p className="text-neutral-600 text-sm mt-3">
               <strong className="text-neutral-900">Church Parish Hall</strong>
               <br />
-              Little Flower Church Grounds,Elamkunnu Madappally
+              Little Flower Church Grounds, Madappally[cite: 1]
             </p>
           </div>
         </div>
@@ -1228,10 +1194,10 @@ export default function WeddingCard() {
               <h3 className="text-xl font-serif font-bold text-neutral-950 mt-2">Austin Jose Thomas</h3>
               <p className="text-neutral-700 text-sm mt-3">
                 Son of <strong className="text-neutral-900">Mr. Tomy Joseph</strong> &amp; <br />
-                <strong className="text-neutral-900">Mrs. Sherly Tomy</strong>
+                <strong className="text-neutral-900">Mrs. Sherly Tomy</strong>[cite: 1]
               </p>
               <p className="text-xs text-neutral-500 mt-3 italic">
-                Kombanaparambil House, Madappally P.O, Changanacherry
+                Kombanaparambil House, Madappally P.O, Changanacherry[cite: 1]
               </p>
             </div>
 
@@ -1242,10 +1208,10 @@ export default function WeddingCard() {
               <h3 className="text-xl font-serif font-bold text-neutral-950 mt-2">Merin Mathew</h3>
               <p className="text-neutral-700 text-sm mt-3">
                 Daughter of <strong className="text-neutral-900">Mr. Mathukutty Oommen</strong> &amp; <br />
-                <strong className="text-neutral-900">Mrs. Molly Mathew</strong>
+                <strong className="text-neutral-900">Mrs. Molly Mathew</strong>[cite: 1]
               </p>
               <p className="text-xs text-neutral-500 mt-3 italic">
-                Valakuzhy House, Anikad P.O, Mallapally
+                Valakuzhy House, Anikad P.O, Mallapally[cite: 1]
               </p>
             </div>
           </div>
