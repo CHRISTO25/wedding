@@ -1148,12 +1148,12 @@ export default function WeddingCard() {
             </div>
             <h3 className="text-xl font-bold text-neutral-950 mb-2">The Marriage Ceremony</h3>
             <p className="text-sm text-neutral-700 mb-1 flex items-center gap-2">
-              <Clock className="w-4 h-4 text-amber-600" /> Saturday, November 7, 2026 | 11:00 AM[cite: 1]
+              <Clock className="w-4 h-4 text-amber-600" /> Saturday, November 7, 2026 | 11:00 AM
             </p>
             <p className="text-neutral-600 text-sm mt-3">
               <strong className="text-neutral-900">Little Flower Church</strong>
               <br />
-              Elamkunnu Road, Madappally, Kerala[cite: 1]
+              Elamkunnu Road, Madappally, Kerala
             </p>
           </div>
 
@@ -1163,12 +1163,12 @@ export default function WeddingCard() {
             </div>
             <h3 className="text-xl font-bold text-neutral-950 mb-2">Marriage Reception</h3>
             <p className="text-sm text-neutral-700 mb-1 flex items-center gap-2">
-              <Clock className="w-4 h-4 text-amber-600" /> Saturday, November 7, 2026 | 12:30 PM[cite: 1]
+              <Clock className="w-4 h-4 text-amber-600" /> Saturday, November 7, 2026 | 12:30 PM
             </p>
             <p className="text-neutral-600 text-sm mt-3">
               <strong className="text-neutral-900">Church Parish Hall</strong>
               <br />
-              Little Flower Church Grounds, Madappally[cite: 1]
+              Little Flower Church Grounds, Madappally
             </p>
           </div>
         </div>
@@ -1194,10 +1194,10 @@ export default function WeddingCard() {
               <h3 className="text-xl font-serif font-bold text-neutral-950 mt-2">Austin Jose Thomas</h3>
               <p className="text-neutral-700 text-sm mt-3">
                 Son of <strong className="text-neutral-900">Mr. Tomy Joseph</strong> &amp; <br />
-                <strong className="text-neutral-900">Mrs. Sherly Tomy</strong>[cite: 1]
+                <strong className="text-neutral-900">Mrs. Sherly Tomy</strong>
               </p>
               <p className="text-xs text-neutral-500 mt-3 italic">
-                Kombanaparambil House, Madappally P.O, Changanacherry[cite: 1]
+                Kombanaparambil House, Madappally P.O, Changanacherry
               </p>
             </div>
 
@@ -1208,10 +1208,10 @@ export default function WeddingCard() {
               <h3 className="text-xl font-serif font-bold text-neutral-950 mt-2">Merin Mathew</h3>
               <p className="text-neutral-700 text-sm mt-3">
                 Daughter of <strong className="text-neutral-900">Mr. Mathukutty Oommen</strong> &amp; <br />
-                <strong className="text-neutral-900">Mrs. Molly Mathew</strong>[cite: 1]
+                <strong className="text-neutral-900">Mrs. Molly Mathew</strong>
               </p>
               <p className="text-xs text-neutral-500 mt-3 italic">
-                Valakuzhy House, Anikad P.O, Mallapally[cite: 1]
+                Valakuzhy House, Anikad P.O, Mallapally
               </p>
             </div>
           </div>
